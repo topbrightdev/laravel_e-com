@@ -49,8 +49,11 @@ class ProductController extends Controller
      */
     public function getProduct(string $slug)
     {
+        $product = $this->productRepo->findProductBySlug(['slug' => $slug]);
+
         return view('front.products.product', [
-            'product' =>  $this->productRepo->findProductBySlug(['slug' => $slug])
+            'product' => $product,
+            'images' => $product->images()->get()
         ]);
     }
 }

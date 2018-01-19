@@ -73,16 +73,13 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
      */
     public function updateProduct(array $params, int $id) : bool
     {
+        $product = $this->find($id);
+
         try {
-            $collection = collect($params)->except('_token');
-            $slug = str_slug($collection->get('name'));
-
-            if (request()->hasFile('cover')) {
-                $cover = $this->uploadOneImage(request()->file('cover'));
+            if (isset($params['thumbnails'])) {
+                $this->saveThumbnails($params['thumbnails'], $product);
             }
-
-            $merge = $collection->merge(compact('slug', 'cover'));
-            return $this->update($merge->all(), $id);
+            return $this->update($params, $id);
         } catch (QueryException $e) {
             throw new ProductInvalidArgumentException($e->getMessage());
         }

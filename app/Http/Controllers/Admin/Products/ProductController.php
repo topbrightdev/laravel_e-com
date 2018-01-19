@@ -155,7 +155,22 @@ class ProductController extends Controller
     public function update(UpdateProductRequest $request, int $id)
     {
         $product = $this->productRepo->findProductById($id);
-        $this->productRepo->updateProduct($request->except('categories', '_token', '_method'), $product->id);
+
+        $data = $request->except('categories', '_token', '_method');
+        $data['slug'] = str_slug($request->input('name'));
+
+        $date = new DateTime('now', new DateTimeZone(config('app.timezone')));
+        $folder = $date->format('U');
+
+        if ($request->hasFile('image')) {
+            $thumbs = collect($request->file('image'))->transform(function (UploadedFile $file) use ($folder) {
+                return $this->uploadOne($file, "products/$folder");
+            })->all();
+
+            $data['thumbnails'] = $thumbs;
+        }
+
+        $this->productRepo->updateProduct($data, $product->id);
 
         if ($request->has('categories')) {
             $collection = collect($request->input('categories'));
@@ -184,7 +199,6 @@ class ProductController extends Controller
             request()->session()->flash('error', 'Ooops, the product (name: '. $product->name .' sku: '. $product->sku .')" has order. You cannot delete this.');
             return redirect()->back();
         }
-
 
         request()->session()->flash('message', 'Delete successful');
         return redirect()->back();
