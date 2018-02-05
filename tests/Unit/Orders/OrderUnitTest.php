@@ -71,9 +71,9 @@ class OrderUnitTest extends TestCase
         $order = factory(Order::class)->create();
 
         $repo = new OrderRepository($order);
-        $result = $repo->searchOrder(str_limit($order, 5));
+        $result = $repo->searchOrder(str_limit($order, 5, ''));
 
-        $this->assertCount(1, $result);
+        $this->assertGreaterThan(0, $result->count());
 
         $result->each(function ($item) use ($order) {
             $this->assertEquals($item->reference, $order->reference);
