@@ -100,7 +100,6 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
      */
     public function deleteProduct(Product $product) : bool
     {
-        $product->images()->delete();
         return $product->delete();
     }
 

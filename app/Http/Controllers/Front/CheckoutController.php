@@ -166,12 +166,11 @@ class CheckoutController extends Controller
             $customer = auth()->user();
             $stripeRepo = new StripeRepository($customer);
 
-            $stripeRepo->execute(
+            return $stripeRepo->execute(
                 $request->all(),
                 Cart::total(),
                 Cart::tax()
             );
-            return redirect()->route('checkout.success')->with('message', 'Stripe payment successful!');
         } catch (StripeChargingErrorException $e) {
             Log::info($e->getMessage());
             return redirect()->route('checkout.index')->with('error', 'There is a problem processing your request.');

@@ -3,6 +3,7 @@
 namespace Tests;
 
 use App\Shop\Addresses\Address;
+use App\Shop\Addresses\Repositories\AddressRepository;
 use App\Shop\Categories\Category;
 use App\Shop\Couriers\Courier;
 use App\Shop\Couriers\Repositories\CourierRepository;

@@ -232,20 +232,10 @@ class ProductUnitTest extends TestCase
     /** @test */
     public function it_can_delete_a_product()
     {
-        $product = factory(Product::class)->create();
-        $productRepo = new ProductRepository(new Product);
+        $product = new ProductRepository(new Product);
+        $product->deleteProduct($this->product);
 
-        $thumbnails = [
-            UploadedFile::fake()->image('file.png', 200, 200),
-            UploadedFile::fake()->image('file1.png', 200, 200),
-            UploadedFile::fake()->image('file2.png', 200, 200)
-        ];
-
-        $productRepo->saveProductImages(collect($thumbnails), $product);
-        $deleted = $productRepo->deleteProduct($product);
-
-        $this->assertTrue($deleted);
-        $this->assertDatabaseMissing('products', ['name' => $product->name]);
+        $this->assertDatabaseMissing('products', collect($this->product)->all());
     }
 
     /** @test */
