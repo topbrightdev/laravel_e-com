@@ -2,23 +2,23 @@
     <table class="table">
         <thead>
         <tr>
-            <td>ID</td>
-            <td>Name</td>
-            <td>Quantity</td>
-            <td>Price</td>
-            <td>Status</td>
-            <td>Actions</td>
+            <td class="col-md-2">Name</td>
+            <td class="col-md-2">Cover</td>
+            <td class="col-md-2">Quantity</td>
+            <td class="col-md-2">Price</td>
+            <td class="col-md-1">Status</td>
+            <td class="col-md-3">Actions</td>
         </tr>
         </thead>
         <tbody>
         @foreach ($products as $product)
             <tr>
-                <td>{{ $product->id }}</td>
-                <td>
-                    @if($admin->hasPermission('view-product'))
-                        <a href="{{ route('admin.products.show', $product->id) }}">{{ $product->name }}</a>
+                <td><a href="{{ route('admin.products.show', $product->id) }}">{{ $product->name }}</a></td>
+                <td class="text-center">
+                    @if(isset($product->cover))
+                        <img src="{{ asset("storage/$product->cover") }}" alt="" class="img-responsive">
                     @else
-                        {{ $product->name }}
+                        -
                     @endif
                 </td>
                 <td>{{ $product->quantity }}</td>
@@ -29,8 +29,8 @@
                         {{ csrf_field() }}
                         <input type="hidden" name="_method" value="delete">
                         <div class="btn-group">
-                            @if($admin->hasPermission('update-product'))<a href="{{ route('admin.products.edit', $product->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Edit</a>@endif
-                            @if($admin->hasPermission('delete-product'))<button onclick="return confirm('Are you sure?')" type="submit" class="btn btn-danger btn-sm"><i class="fa fa-times"></i> Delete</button>@endif
+                            <a href="{{ route('admin.products.edit', $product->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Edit</a>
+                            <button onclick="return confirm('Are you sure?')" type="submit" class="btn btn-danger btn-sm"><i class="fa fa-times"></i> Delete</button>
                         </div>
                     </form>
                 </td>

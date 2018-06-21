@@ -2,7 +2,7 @@
 
 namespace App\Shop\Carts\Repositories;
 
-use Jsdecena\Baserepo\BaseRepository;
+use App\Shop\Base\BaseRepository;
 use App\Shop\Carts\Exceptions\ProductInCartNotFoundException;
 use App\Shop\Carts\Repositories\Interfaces\CartRepositoryInterface;
 use App\Shop\Carts\ShoppingCart;
@@ -47,15 +47,13 @@ class CartRepository extends BaseRepository implements CartRepositoryInterface
 
     /**
      * @param string $rowId
-     *
-     * @throws ProductInCartNotFoundException
      */
     public function removeToCart(string $rowId)
     {
         try {
             $this->model->remove($rowId);
         } catch (InvalidRowIDException $e) {
-            throw new ProductInCartNotFoundException('Product in cart not found.');
+            throw new ProductInCartNotFoundException($e->getMessage());
         }
     }
 
@@ -157,8 +155,7 @@ class CartRepository extends BaseRepository implements CartRepositoryInterface
      */
     public function openCart(Customer $customer, $instance = 'default')
     {
-        $this->model->instance($instance)->restore($customer->email);
-        return $this->model;
+        return $this->model->instance($instance)->restore($customer->email);
     }
 
     /**
@@ -166,7 +163,7 @@ class CartRepository extends BaseRepository implements CartRepositoryInterface
      */
     public function getCartItemsTransformed() : Collection
     {
-        return $this->getCartItems()->map(function ($item) {
+        return $this->getCartItems()->map(function (CartItem $item) {
             $productRepo = new ProductRepository(new Product());
             $product = $productRepo->findProductById($item->id);
             $item->product = $product;

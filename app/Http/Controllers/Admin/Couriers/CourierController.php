@@ -95,10 +95,7 @@ class CourierController extends Controller
      */
     public function destroy(int $id)
     {
-        $courier = $this->courierRepo->findCourierById($id);
-
-        $courierRepo = new CourierRepository($courier);
-        $courierRepo->delete();
+        $this->courierRepo->delete($id);
 
         request()->session()->flash('message', 'Delete successful');
         return redirect()->route('admin.couriers.index');

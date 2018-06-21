@@ -20,7 +20,7 @@ $factory->define(City::class, function (Faker\Generator $faker) {
     $province = factory(Province::class)->create();
 
     return [
-        'name' => $faker->city,
+        'name' => $faker->country,
         'province_id' => $province->id
     ];
 });

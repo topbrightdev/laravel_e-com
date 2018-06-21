@@ -13,11 +13,11 @@ class AttributeValuesFeatureTest extends TestCase
         $attribute = factory(Attribute::class)->create();
 
         $this
-            ->actingAs($this->employee, 'employee')
+            ->actingAs($this->employee, 'admin')
             ->post(route('admin.attributes.values.store', $attribute->id), ['value' => 'test']);
 
         $this
-            ->actingAs($this->employee, 'employee')
+            ->actingAs($this->employee, 'admin')
             ->delete(route('admin.attributes.values.destroy', [$attribute->id, 1]))
             ->assertStatus(302)
             ->assertRedirect(route('admin.attributes.show', $attribute->id))
@@ -30,7 +30,7 @@ class AttributeValuesFeatureTest extends TestCase
         $attribute = factory(Attribute::class)->create();
 
         $this
-            ->actingAs($this->employee, 'employee')
+            ->actingAs($this->employee, 'admin')
             ->post(route('admin.attributes.values.store', $attribute->id), ['value' => 'test'])
             ->assertStatus(302)
             ->assertRedirect(route('admin.attributes.show', $attribute->id))
@@ -43,7 +43,7 @@ class AttributeValuesFeatureTest extends TestCase
         $attribute = factory(Attribute::class)->create();
 
         $this
-            ->actingAs($this->employee, 'employee')
+            ->actingAs($this->employee, 'admin')
             ->get(route('admin.attributes.values.create', $attribute->id))
             ->assertStatus(200)
             ->assertSee('Attribute value')

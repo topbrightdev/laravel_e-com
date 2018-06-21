@@ -26,7 +26,7 @@ class BrandUnitTest extends TestCase
     {
         $brand = factory(Brand::class)->create();
 
-        $brandRepo = new BrandRepository($brand);
+        $brandRepo = new BrandRepository(new Brand);
         $deleted = $brandRepo->deleteBrand($brand->id);
 
         $this->assertTrue($deleted);
@@ -39,8 +39,8 @@ class BrandUnitTest extends TestCase
 
         $data = ['name' => 'Argentina'];
 
-        $brandRepo = new BrandRepository($brand);
-        $updated = $brandRepo->updateBrand($data);
+        $brandRepo = new BrandRepository(new Brand);
+        $updated = $brandRepo->updateBrand($data, $brand->id);
 
         $found = $brandRepo->findBrandById($brand->id);
 

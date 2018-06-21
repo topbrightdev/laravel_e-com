@@ -176,13 +176,11 @@ class ProductUnitTest extends TestCase
     /** @test */
     public function it_can_search_the_product()
     {
-        $this->markTestSkipped('nor returning results???');
-
         $product = factory(Product::class)->create();
 
         $name = str_limit($product->name, 2, '');
 
-        $productRepo = new ProductRepository($product);
+        $productRepo = new ProductRepository(new Product);
         $results = $productRepo->searchProduct($name);
 
         $this->assertGreaterThan(0, $results->count());
@@ -235,7 +233,7 @@ class ProductUnitTest extends TestCase
     public function it_can_delete_a_product()
     {
         $product = factory(Product::class)->create();
-        $productRepo = new ProductRepository($product);
+        $productRepo = new ProductRepository(new Product);
 
         $thumbnails = [
             UploadedFile::fake()->image('file.png', 200, 200),
@@ -243,7 +241,7 @@ class ProductUnitTest extends TestCase
             UploadedFile::fake()->image('file2.png', 200, 200)
         ];
 
-        $productRepo->saveProductImages(collect($thumbnails));
+        $productRepo->saveProductImages(collect($thumbnails), $product);
         $deleted = $productRepo->deleteProduct($product);
 
         $this->assertTrue($deleted);
@@ -298,7 +296,7 @@ class ProductUnitTest extends TestCase
         $productName = 'apple';
         $cover = UploadedFile::fake()->image('file.png', 600, 600);
 
-        $data = [
+        $params = [
             'sku' => '11111',
             'name' => $productName,
             'slug' => str_slug($productName),
@@ -315,7 +313,7 @@ class ProductUnitTest extends TestCase
         ];
 
         $productRepo = new ProductRepository($product);
-        $updated = $productRepo->updateProduct($data);
+        $updated = $productRepo->updateProduct($params, $product->id);
 
         $this->assertTrue($updated);
     }

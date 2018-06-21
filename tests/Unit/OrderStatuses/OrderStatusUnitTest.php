@@ -44,9 +44,14 @@ class OrderStatusUnitTest extends TestCase
     /** @test */
     public function it_can_delete_the_order_status()
     {
-        $os = factory(OrderStatus::class)->create();
+        $create = [
+            'name' => $this->faker->name,
+            'color' => $this->faker->word
+        ];
 
-        $orderStatusRepo = new OrderStatusRepository($os);
+        $orderStatusRepo = new OrderStatusRepository(new OrderStatus);
+        $os = $orderStatusRepo->createOrderStatus($create);
+
         $orderStatusRepo->deleteOrderStatus($os);
 
         $this->assertDatabaseMissing('order_statuses', $os->toArray());
@@ -104,16 +109,15 @@ class OrderStatusUnitTest extends TestCase
     {
         $orderStatusRepo = new OrderStatusRepository($this->orderStatus);
 
-        $data = [
+        $update = [
             'name' => $this->faker->name,
             'color' => $this->faker->word
         ];
 
-        $updated = $orderStatusRepo->updateOrderStatus($data);
+        $updatedOrderStatus = $orderStatusRepo->updateOrderStatus($update);
 
-        $this->assertTrue($updated);
-        $this->assertEquals($data['name'], $this->orderStatus->name);
-        $this->assertEquals($data['color'], $this->orderStatus->color);
+        $this->assertEquals($update['name'], $updatedOrderStatus->name);
+        $this->assertEquals($update['color'], $updatedOrderStatus->color);
     }
     
     /** @test */

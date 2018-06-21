@@ -20,18 +20,16 @@ class Address extends Model
      *
      * @var array
      */
-    public $fillable = [
+    protected $fillable = [
         'alias',
         'address_1',
         'address_2',
         'zip',
-        'city',
-        'state_code',
+        'city_id',
         'province_id',
         'country_id',
         'customer_id',
-        'status',
-        'phone'
+        'status'
     ];
 
     /**
@@ -58,14 +56,9 @@ class Address extends Model
         return $this->belongsTo(Province::class);
     }
 
-    /**
-     * @deprecated
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
     public function city()
     {
-        return $this->belongsTo(City::class, 'city');
+        return $this->belongsTo(City::class);
     }
 
     public function orders()

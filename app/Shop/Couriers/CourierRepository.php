@@ -2,7 +2,8 @@
 
 namespace App\Shop\Couriers\Repositories;
 
-use Jsdecena\Baserepo\BaseRepository;
+use App\Shop\Base\BaseRepository;
+use App\Shop\Countries\Exceptions\CountryNotFoundException;
 use App\Shop\Couriers\Courier;
 use App\Shop\Couriers\Exceptions\CourierInvalidArgumentException;
 use App\Shop\Couriers\Exceptions\CourierNotFoundException;
@@ -43,14 +44,14 @@ class CourierRepository extends BaseRepository implements CourierRepositoryInter
      * Update the courier
      *
      * @param array $params
-     *
-     * @return bool
+     * @return Courier
      * @throws CourierInvalidArgumentException
      */
-    public function updateCourier(array $params) : bool
+    public function updateCourier(array $params) : Courier
     {
         try {
-            return $this->update($params);
+            $this->update($params, $this->model->id);
+            return $this->find($this->model->id);
         } catch (QueryException $e) {
             throw new CourierInvalidArgumentException($e->getMessage());
         }
@@ -60,16 +61,15 @@ class CourierRepository extends BaseRepository implements CourierRepositoryInter
      * Return the courier
      *
      * @param int $id
-     *
      * @return Courier
-     * @throws CourierNotFoundException
+     * @throws CountryNotFoundException
      */
     public function findCourierById(int $id) : Courier
     {
         try {
             return $this->findOneOrFail($id);
         } catch (ModelNotFoundException $e) {
-            throw new CourierNotFoundException('Courier not found.');
+            throw new CourierNotFoundException($e->getMessage());
         }
     }
 
@@ -82,15 +82,6 @@ class CourierRepository extends BaseRepository implements CourierRepositoryInter
      */
     public function listCouriers(string $order = 'id', string $sort = 'desc') : Collection
     {
-        return $this->all(['*'], $order, $sort);
-    }
-
-    /**
-     * @return bool
-     * @throws \Exception
-     */
-    public function deleteCourier()
-    {
-        return $this->delete();
+        return $this->model->where('status', 1)->orderBy($order, $sort)->get();
     }
 }

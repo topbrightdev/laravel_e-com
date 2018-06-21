@@ -129,17 +129,13 @@ class CustomerController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int $id
-     *
      * @return \Illuminate\Http\Response
-     * @throws \Exception
      */
     public function destroy($id)
     {
-        $customer = $this->customerRepo->findCustomerById($id);
+        $this->customerRepo->delete($id);
 
-        $customerRepo = new CustomerRepository($customer);
-        $customerRepo->deleteCustomer();
-
-        return redirect()->route('admin.customers.index')->with('message', 'Delete successful');
+        request()->session()->flash('message', 'Delete successful');
+        return redirect()->route('admin.customers.index');
     }
 }

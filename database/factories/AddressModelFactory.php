@@ -21,10 +21,10 @@ $factory->define(Address::class, function (Faker\Generator $faker) {
 
     return [
         'alias' => $faker->word,
-        'address_1' => $faker->streetAddress,
-        'address_2' => null,
+        'address_1' => $faker->streetName,
+        'address_2' => $faker->streetAddress,
         'zip' => $faker->postcode,
-        'city' => $faker->city,
+        'city_id' => 1,
         'province_id' => 1,
         'country_id' => 1,
         'customer_id' => $customer->id,

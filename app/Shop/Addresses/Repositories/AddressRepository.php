@@ -3,18 +3,19 @@
 namespace App\Shop\Addresses\Repositories;
 
 use App\Shop\Addresses\Address;
-use App\Shop\Addresses\Exceptions\CreateAddressErrorException;
+use App\Shop\Addresses\Exceptions\AddressInvalidArgumentException;
 use App\Shop\Addresses\Exceptions\AddressNotFoundException;
 use App\Shop\Addresses\Repositories\Interfaces\AddressRepositoryInterface;
 use App\Shop\Addresses\Transformations\AddressTransformable;
+use App\Shop\Base\BaseRepository;
 use App\Shop\Cities\City;
 use App\Shop\Countries\Country;
 use App\Shop\Customers\Customer;
+use App\Shop\Customers\Transformations\CustomerTransformable;
 use App\Shop\Provinces\Province;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Collection;
-use Jsdecena\Baserepo\BaseRepository;
 
 class AddressRepository extends BaseRepository implements AddressRepositoryInterface
 {
@@ -33,17 +34,21 @@ class AddressRepository extends BaseRepository implements AddressRepositoryInter
     /**
      * Create the address
      *
-     * @param array $data
-     *
+     * @param array $params
      * @return Address
-     * @throws CreateAddressErrorException
      */
-    public function createAddress(array $data) : Address
+    public function createAddress(array $params) : Address
     {
         try {
-            return $this->create($data);
+            $address = new Address($params);
+            if (isset($params['customer'])) {
+                $address->customer()->associate($params['customer']);
+            }
+            $address->save();
+
+            return $address;
         } catch (QueryException $e) {
-            throw new CreateAddressErrorException('Address creation error');
+            throw new AddressInvalidArgumentException('Address creation error', 500, $e);
         }
     }
 
@@ -59,12 +64,12 @@ class AddressRepository extends BaseRepository implements AddressRepositoryInter
     }
 
     /**
-     * @param array $data
+     * @param array $update
      * @return bool
      */
-    public function updateAddress(array $data): bool
+    public function updateAddress(array $update): bool
     {
-        return $this->update($data);
+        return $this->model->update($update);
     }
 
     /**
@@ -94,16 +99,14 @@ class AddressRepository extends BaseRepository implements AddressRepositoryInter
      * Return the address
      *
      * @param int $id
-     *
      * @return Address
-     * @throws AddressNotFoundException
      */
     public function findAddressById(int $id) : Address
     {
         try {
             return $this->findOneOrFail($id);
         } catch (ModelNotFoundException $e) {
-            throw new AddressNotFoundException('Address not found.');
+            throw new AddressNotFoundException($e->getMessage());
         }
     }
 
@@ -127,6 +130,7 @@ class AddressRepository extends BaseRepository implements AddressRepositoryInter
             'address_1' => 10,
             'address_2' => 5,
             'province.name' => 5,
+            'city.name' => 5,
             'country.name' => 5
         ])->get();
     }

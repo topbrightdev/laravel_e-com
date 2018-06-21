@@ -38,9 +38,11 @@ class StripeRepository
     public function execute(array $data, $total, $tax) : Charge
     {
         try {
+            $courierRepo = new CourierRepository(new Courier);
+            $courierId = $data['courier'];
+            $courier = $courierRepo->findCourierById($courierId);
 
-            $shipping = 0;
-            $totalComputed = $total + $shipping;
+            $totalComputed = $total + $courier->cost;
 
             $customerRepo = new CustomerRepository($this->customer);
             $options['source'] = $data['stripeToken'];
@@ -50,7 +52,7 @@ class StripeRepository
                 $checkoutRepo = new CheckoutRepository;
                 $checkoutRepo->buildCheckoutItems([
                     'reference' => Uuid::uuid4()->toString(),
-                    'courier_id' => 1,
+                    'courier_id' => $courierId,
                     'customer_id' => $this->customer->id,
                     'address_id' => $data['billing_address'],
                     'order_status_id' => 1,

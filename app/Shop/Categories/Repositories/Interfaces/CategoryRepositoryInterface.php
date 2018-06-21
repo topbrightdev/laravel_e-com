@@ -2,7 +2,7 @@
 
 namespace App\Shop\Categories\Repositories\Interfaces;
 
-use Jsdecena\Baserepo\BaseRepositoryInterface;
+use App\Shop\Base\Interfaces\BaseRepositoryInterface;
 use App\Shop\Categories\Category;
 use App\Shop\Products\Product;
 use Illuminate\Support\Collection;

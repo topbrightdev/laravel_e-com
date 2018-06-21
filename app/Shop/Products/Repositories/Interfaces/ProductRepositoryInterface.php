@@ -3,7 +3,7 @@
 namespace App\Shop\Products\Repositories\Interfaces;
 
 use App\Shop\AttributeValues\AttributeValue;
-use Jsdecena\Baserepo\BaseRepositoryInterface;
+use App\Shop\Base\Interfaces\BaseRepositoryInterface;
 use App\Shop\Brands\Brand;
 use App\Shop\ProductAttributes\ProductAttribute;
 use App\Shop\Products\Product;
@@ -16,7 +16,7 @@ interface ProductRepositoryInterface extends BaseRepositoryInterface
 
     public function createProduct(array $data) : Product;
 
-    public function updateProduct(array $data) : bool;
+    public function updateProduct(array $params, int $id) : bool;
 
     public function findProductById(int $id) : Product;
 
@@ -40,7 +40,7 @@ interface ProductRepositoryInterface extends BaseRepositoryInterface
 
     public function saveCoverImage(UploadedFile $file) : string;
 
-    public function saveProductImages(Collection $collection);
+    public function saveProductImages(Collection $collection, Product $product);
 
     public function saveProductAttributes(ProductAttribute $productAttribute) : ProductAttribute;
 

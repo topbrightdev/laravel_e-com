@@ -2,6 +2,8 @@
 
 namespace App\Shop\Products\Exceptions;
 
-class ProductInvalidArgumentException extends \Exception
+use Doctrine\Instantiator\Exception\InvalidArgumentException;
+
+class ProductInvalidArgumentException extends InvalidArgumentException
 {
 }

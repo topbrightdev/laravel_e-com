@@ -2,7 +2,7 @@
 
 namespace App\Shop\Employees\Repositories\Interfaces;
 
-use Jsdecena\Baserepo\BaseRepositoryInterface;
+use App\Shop\Base\Interfaces\BaseRepositoryInterface;
 use App\Shop\Employees\Employee;
 use Illuminate\Support\Collection;
 
@@ -23,6 +23,4 @@ interface EmployeeRepositoryInterface extends BaseRepositoryInterface
     public function hasRole(string $roleName) : bool;
 
     public function isAuthUser(Employee $employee): bool;
-
-    public function deleteEmployee() : bool;
 }

@@ -11,16 +11,14 @@
         "fideloper/proxy": "~4.0",
         "gloudemans/shoppingcart": "^2.5",
         "guzzlehttp/guzzle": "^6.3",
-        "jsdecena/baserepo": "^1.0",
         "jsdecena/mailchimp": "~7.0",
         "jsdecena/mcpro": "1.1.*",
         "laravel/cashier": "~7.0",
         "laravel/framework": "5.6.*",
         "laravel/tinker": "~1.0",
-        "nicolaslopezj/searchable": "^1.10",
         "paypal/rest-api-sdk-php": "*",
         "santigarcor/laratrust": "5.0.*",
-        "shippo/shippo-php": "^1.4"
+        "sofa/eloquence": "^5.5"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

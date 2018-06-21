@@ -11,12 +11,13 @@
 |
 */
 
+
 use App\Shop\Permissions\Permission;
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(Permission::class, function (Faker\Generator $faker) {
 
     return [
-        'name' => $faker->unique()->word,
+        'name' => $faker->word,
         'display_name' => '',
         'description' => ''
     ];

@@ -13,7 +13,7 @@ class CourierFeatureTest extends TestCase
         $courier = factory(Courier::class)->create();
 
         $this
-            ->actingAs($this->employee, 'employee')
+            ->actingAs($this->employee, 'admin')
             ->get(route('admin.couriers.index'))
             ->assertStatus(200)
             ->assertSee(htmlentities($courier->name, ENT_QUOTES));
@@ -25,7 +25,7 @@ class CourierFeatureTest extends TestCase
         $courier = factory(Courier::class)->create();
 
         $this
-            ->actingAs($this->employee, 'employee')
+            ->actingAs($this->employee, 'admin')
             ->delete(route('admin.couriers.destroy', $courier->id))
             ->assertStatus(302)
             ->assertRedirect(route('admin.couriers.index'))
@@ -46,7 +46,7 @@ class CourierFeatureTest extends TestCase
         ];
 
         $this
-            ->actingAs($this->employee, 'employee')
+            ->actingAs($this->employee, 'admin')
             ->put(route('admin.couriers.update', $courier->id), $data)
             ->assertStatus(302)
             ->assertRedirect(route('admin.couriers.edit', $courier->id))
@@ -59,7 +59,7 @@ class CourierFeatureTest extends TestCase
         $courier = factory(Courier::class)->create();
 
         $this
-            ->actingAs($this->employee, 'employee')
+            ->actingAs($this->employee, 'admin')
             ->get(route('admin.couriers.edit', $courier->id))
             ->assertStatus(200)
             ->assertSee(htmlentities($courier->name, ENT_QUOTES));
@@ -69,7 +69,7 @@ class CourierFeatureTest extends TestCase
     public function it_can_show_the_create_page()
     {
         $this
-            ->actingAs($this->employee, 'employee')
+            ->actingAs($this->employee, 'admin')
             ->get(route('admin.couriers.create'))
             ->assertStatus(200);
     }
@@ -86,7 +86,7 @@ class CourierFeatureTest extends TestCase
         ];
 
         $this
-            ->actingAs($this->employee, 'employee')
+            ->actingAs($this->employee, 'admin')
             ->post(route('admin.couriers.store'), $data)
             ->assertStatus(302)
             ->assertRedirect(route('admin.couriers.index'))
@@ -99,7 +99,7 @@ class CourierFeatureTest extends TestCase
         $courier = factory(Courier::class)->create();
 
         $this
-            ->actingAs($this->employee, 'employee')
+            ->actingAs($this->employee, 'admin')
             ->put(route('admin.couriers.update', $courier->id), [])
             ->assertSessionHasErrors(['name' => 'The name field is required.']);
     }
@@ -110,7 +110,7 @@ class CourierFeatureTest extends TestCase
         $courier = factory(Courier::class)->create();
 
         $this
-            ->actingAs($this->employee, 'employee')
+            ->actingAs($this->employee, 'admin')
             ->post(route('admin.couriers.store'), ['name' => $courier->name])
             ->assertSessionHasErrors();
     }
@@ -119,7 +119,7 @@ class CourierFeatureTest extends TestCase
     public function it_errors_creating_the_courier()
     {
         $this
-            ->actingAs($this->employee, 'employee')
+            ->actingAs($this->employee, 'admin')
             ->post(route('admin.couriers.store'), [])
             ->assertSessionHasErrors(['name' => 'The name field is required.']);
     }

@@ -13,22 +13,9 @@ class AccountsController extends Controller
 {
     use OrderTransformable;
 
-    /**
-     * @var CustomerRepositoryInterface
-     */
     private $customerRepo;
-
-    /**
-     * @var CourierRepositoryInterface
-     */
     private $courierRepo;
 
-    /**
-     * AccountsController constructor.
-     *
-     * @param CourierRepositoryInterface $courierRepository
-     * @param CustomerRepositoryInterface $customerRepository
-     */
     public function __construct(
         CourierRepositoryInterface $courierRepository,
         CustomerRepositoryInterface $customerRepository
@@ -42,7 +29,7 @@ class AccountsController extends Controller
         $customer = $this->customerRepo->findCustomerById(auth()->user()->id);
 
         $customerRepo = new CustomerRepository($customer);
-        $orders = $customerRepo->findOrders(['*'], 'created_at');
+        $orders = $customerRepo->findOrders();
 
         $orders->transform(function (Order $order) {
             return $this->transformOrder($order);
@@ -52,7 +39,7 @@ class AccountsController extends Controller
 
         return view('front.accounts', [
             'customer' => $customer,
-            'orders' => $this->customerRepo->paginateArrayResults($orders->toArray(), 15),
+            'orders' => $this->customerRepo->paginateArrayResults($orders->toArray(), 3),
             'addresses' => $addresses
         ]);
     }

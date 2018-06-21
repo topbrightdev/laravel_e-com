@@ -8,7 +8,6 @@ class Role extends LaratrustRole
 {
     protected $fillable = [
         'name',
-        'display_name',
-        'description'
+        'display_name'
     ];
 }

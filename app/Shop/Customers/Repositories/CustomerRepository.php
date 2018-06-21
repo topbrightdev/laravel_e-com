@@ -3,7 +3,7 @@
 namespace App\Shop\Customers\Repositories;
 
 use App\Shop\Addresses\Address;
-use Jsdecena\Baserepo\BaseRepository;
+use App\Shop\Base\BaseRepository;
 use App\Shop\Customers\Customer;
 use App\Shop\Customers\Exceptions\CreateCustomerInvalidArgumentException;
 use App\Shop\Customers\Exceptions\CustomerNotFoundException;
@@ -131,26 +131,20 @@ class CustomerRepository extends BaseRepository implements CustomerRepositoryInt
     }
 
     /**
-     * @param array $columns
-     * @param string $orderBy
-     *
      * @return Collection
      */
-    public function findOrders($columns = ['*'], string $orderBy = 'id') : Collection
+    public function findOrders() : Collection
     {
-        return $this->model->orders()->get($columns)->sortByDesc($orderBy);
+        return $this->model->orders()->get();
     }
 
     /**
      * @param string $text
      * @return mixed
      */
-    public function searchCustomer(string $text = null) : Collection
+    public function searchCustomer(string $text) : Collection
     {
-        if (is_null($text)) {
-            return $this->all();
-        }
-        return $this->model->searchCustomer($text)->get();
+        return $this->model->searchCustomer($text, ['name' => 10, 'email' => 5])->get();
     }
 
     /**

@@ -2,7 +2,7 @@
 
 namespace App\Shop\Orders\Repositories;
 
-use Jsdecena\Baserepo\BaseRepository;
+use App\Shop\Base\BaseRepository;
 use App\Shop\Employees\Employee;
 use App\Shop\Employees\Repositories\EmployeeRepository;
 use App\Events\OrderCreateEvent;
@@ -56,14 +56,14 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
 
     /**
      * @param array $params
-     *
-     * @return bool
+     * @return Order
      * @throws OrderInvalidArgumentException
      */
-    public function updateOrder(array $params) : bool
+    public function updateOrder(array $params) : Order
     {
         try {
-            return $this->update($params);
+            $this->update($params, $this->model->id);
+            return $this->find($this->model->id);
         } catch (QueryException $e) {
             throw new OrderInvalidArgumentException($e->getMessage());
         }
@@ -150,11 +150,15 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
      */
     public function searchOrder(string $text) : Collection
     {
-        if (!empty($text)) {
-            return $this->model->searchForOrder($text)->get();
-        } else {
-            return $this->listOrders();
-        }
+        return $this->model->searchOrder(
+            $text,
+            [
+                'products.name',
+                'products.description',
+                'customer.name',
+                'reference'
+            ]
+        )->get();
     }
 
     /**

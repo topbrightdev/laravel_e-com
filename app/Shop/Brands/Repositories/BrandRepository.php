@@ -2,10 +2,11 @@
 
 namespace App\Shop\Brands\Repositories;
 
-use Jsdecena\Baserepo\BaseRepository;
+use App\Shop\Base\BaseRepository;
 use App\Shop\Brands\Brand;
 use App\Shop\Brands\Exceptions\BrandNotFoundErrorException;
 use App\Shop\Brands\Exceptions\CreateBrandErrorException;
+use App\Shop\Brands\Exceptions\DeletingBrandErrorException;
 use App\Shop\Brands\Exceptions\UpdateBrandErrorException;
 use App\Shop\Products\Product;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -62,22 +63,28 @@ class BrandRepository extends BaseRepository implements BrandRepositoryInterface
      * @return bool
      * @throws UpdateBrandErrorException
      */
-    public function updateBrand(array $data) : bool
+    public function updateBrand(array $data, int $id) : bool
     {
         try {
-            return $this->update($data);
+            return $this->update($data, $id);
         } catch (QueryException $e) {
             throw new UpdateBrandErrorException($e);
         }
     }
 
     /**
+     * @param int $id
+     *
      * @return bool
-     * @throws \Exception
+     * @throws DeletingBrandErrorException
      */
-    public function deleteBrand() : bool
+    public function deleteBrand(int $id) : bool
     {
-        return $this->delete();
+        try {
+            return $this->delete($id);
+        } catch (QueryException $e) {
+            throw new DeletingBrandErrorException($e);
+        }
     }
 
     /**

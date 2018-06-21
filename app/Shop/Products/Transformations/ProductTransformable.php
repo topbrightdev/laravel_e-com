@@ -27,9 +27,7 @@ trait ProductTransformable
         $prod->quantity = $product->quantity;
         $prod->price = $product->price;
         $prod->status = $product->status;
-        $prod->weight = (float) $product->weight;
-        $prod->mass_unit = $product->mass_unit;
-        $prod->brand_id = $product->brand_id;
+        $prod->brand_id = (int) $product->brand_id;
 
         return $prod;
     }

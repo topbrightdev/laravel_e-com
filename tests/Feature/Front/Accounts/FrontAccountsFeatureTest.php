@@ -77,7 +77,7 @@ class FrontAccountsFeatureTest extends TestCase
         $this
             ->post(route('login'), ['email' => $this->customer->email, 'password' => 'secret'])
             ->assertStatus(302)
-            ->assertRedirect(route('accounts', ['tab' => 'profile']));
+            ->assertRedirect(route('accounts'));
     }
 
     /** @test */
@@ -118,7 +118,7 @@ class FrontAccountsFeatureTest extends TestCase
 
         $this->post(route('login'), $data)
             ->assertStatus(302)
-            ->assertRedirect(route('accounts', ['tab' => 'profile']));
+            ->assertRedirect(route('accounts'));
     }
 
     /** @test */

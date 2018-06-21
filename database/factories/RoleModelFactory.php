@@ -17,7 +17,7 @@ use App\Shop\Roles\Role;
 $factory->define(Role::class, function (Faker\Generator $faker) {
 
     return [
-        'name' => $faker->unique()->word,
+        'name' => $faker->word,
         'display_name' => '',
         'description' => ''
     ];

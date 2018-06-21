@@ -3,7 +3,6 @@
 namespace App\Shop\Countries;
 
 use App\Shop\Provinces\Province;
-use App\Shop\States\State;
 use Illuminate\Database\Eloquent\Model;
 
 class Country extends Model
@@ -32,13 +31,5 @@ class Country extends Model
     public function provinces()
     {
         return $this->hasMany(Province::class);
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function states()
-    {
-        return $this->hasMany(State::class);
     }
 }

@@ -4,7 +4,7 @@ namespace App\Shop\Attributes\Repositories;
 
 use App\Shop\Attributes\Attribute;
 use App\Shop\AttributeValues\AttributeValue;
-use Jsdecena\Baserepo\BaseRepositoryInterface;
+use App\Shop\Base\Interfaces\BaseRepositoryInterface;
 use Illuminate\Support\Collection;
 
 interface AttributeRepositoryInterface extends BaseRepositoryInterface

@@ -2,7 +2,7 @@
 
 namespace App\Shop\Orders\Repositories\Interfaces;
 
-use Jsdecena\Baserepo\BaseRepositoryInterface;
+use App\Shop\Base\Interfaces\BaseRepositoryInterface;
 use App\Shop\Orders\Order;
 use App\Shop\Products\Product;
 use Illuminate\Support\Collection;
@@ -11,7 +11,7 @@ interface OrderRepositoryInterface extends BaseRepositoryInterface
 {
     public function createOrder(array $data) : Order;
 
-    public function updateOrder(array $params) : bool;
+    public function updateOrder(array $update) : Order;
 
     public function findOrderById(int $id) : Order;
 

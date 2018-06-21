@@ -16,6 +16,7 @@ class PayPalCheckoutExecutionRequest extends BaseFormRequest implements Checkout
         return [
             'paymentId' => ['required'],
             'PayerID' => ['required'],
+            'courier' => ['required'],
             'billing_address' => ['required'],
             'payment' => ['required']
         ];

@@ -13,11 +13,14 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 use App\Shop\Provinces\Province;
+use App\Shop\Countries\Country;
 
 $factory->define(Province::class, function (Faker\Generator $faker) {
 
+    $country = factory(Country::class)->create();
+
     return [
-        'name' => $faker->city,
-        'country_id' => 1
+        'name' => $faker->country,
+        'country_id' => $country->id
     ];
 });

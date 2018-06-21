@@ -2717,7 +2717,7 @@ class MyCountryTableSeeder extends Seeder
                 array (
                     'id' => '226',
                     'iso' => 'US',
-                    'name' => 'UNITED STATES OF AMERICA',
+                    'name' => 'UNITED STATES',
                     'iso3' => 'USA',
                     'numcode' => '840',
                     'phonecode' => '1',

@@ -3,8 +3,7 @@
 namespace App\Shop\Products\Repositories;
 
 use App\Shop\AttributeValues\AttributeValue;
-use App\Shop\Tools\UploadableTrait;
-use Jsdecena\Baserepo\BaseRepository;
+use App\Shop\Base\BaseRepository;
 use App\Shop\Brands\Brand;
 use App\Shop\ProductAttributes\ProductAttribute;
 use App\Shop\ProductImages\ProductImage;
@@ -21,7 +20,7 @@ use Illuminate\Support\Facades\DB;
 
 class ProductRepository extends BaseRepository implements ProductRepositoryInterface
 {
-    use ProductTransformable, UploadableTrait;
+    use ProductTransformable;
 
     /**
      * ProductRepository constructor.
@@ -49,15 +48,15 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     /**
      * Create the product
      *
-     * @param array $data
-     *
+     * @param array $params
      * @return Product
-     * @throws ProductInvalidArgumentException
      */
-    public function createProduct(array $data) : Product
+    public function createProduct(array $params) : Product
     {
         try {
-            return $this->create($data);
+            $product = new Product($params);
+            $product->save();
+            return $product;
         } catch (QueryException $e) {
             throw new ProductInvalidArgumentException($e->getMessage());
         }
@@ -66,19 +65,16 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     /**
      * Update the product
      *
-     * @param array $data
-     *
+     * @param array $params
+     * @param int $id
      * @return bool
-     * @throws ProductInvalidArgumentException
      */
-    public function updateProduct(array $data) : bool
+    public function updateProduct(array $params, int $id) : bool
     {
-        $filtered = collect($data)->except('image')->all();
-
         try {
-            return $this->model->where('id', $this->model->id)->update($filtered);
+            return $this->update($params, $id);
         } catch (QueryException $e) {
-            throw new ProductInvalidArgumentException($e);
+            throw new ProductInvalidArgumentException($e->getMessage());
         }
     }
 
@@ -183,11 +179,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
      */
     public function searchProduct(string $text) : Collection
     {
-        if (!empty($text)) {
-            return $this->model->searchProduct($text);
-        } else {
-            return $this->listProducts();
-        }
+        return $this->model->searchProduct($text);
     }
 
     /**
@@ -209,18 +201,19 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
 
     /**
      * @param Collection $collection
+     * @param Product $product
      *
      * @return void
      */
-    public function saveProductImages(Collection $collection)
+    public function saveProductImages(Collection $collection, Product $product)
     {
-        $collection->each(function (UploadedFile $file) {
-            $filename = $this->storeFile($file);
+        $collection->each(function (UploadedFile $file) use ($product) {
+            $filename = $file->store('products', ['disk' => 'public']);
             $productImage = new ProductImage([
-                'product_id' => $this->model->id,
+                'product_id' => $product->id,
                 'src' => $filename
             ]);
-            $this->model->images()->save($productImage);
+            $product->images()->save($productImage);
         });
     }
 

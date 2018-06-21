@@ -111,7 +111,7 @@
                                                     <select name="brand_id" id="brand_id" class="form-control select2">
                                                         <option value=""></option>
                                                         @foreach($brands as $brand)
-                                                            <option @if($brand->id == $product->brand_id) selected="selected" @endif value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                                            <option @if(!is_null($product->brand_id) && $brand->id == $product->brand_id) selected="selected" @endif value="{{ $brand->id }}">{{ $brand->name }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -119,7 +119,6 @@
                                             <div class="form-group">
                                                 @include('admin.shared.status-select', ['status' => $product->status])
                                             </div>
-                                            @include('admin.shared.attribute-select', [compact('default_weight')])
                                             <!-- /.box-body -->
                                         </div>
                                         <div class="col-md-4">

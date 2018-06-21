@@ -155,7 +155,6 @@ return [
         Jsdecena\MCPro\McproServiceProvider::class,
         Jsdecena\MailChimp\MailChimpServiceProvider::class,
         Laravel\Cashier\CashierServiceProvider::class,
-        Jsdecena\Baserepo\BaseRepositoryProvider::class,
 
         /*
          * Application Service Providers...
