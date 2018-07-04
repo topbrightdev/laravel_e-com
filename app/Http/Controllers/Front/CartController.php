@@ -86,29 +86,25 @@ class CartController extends Controller
     {
         $product = $this->productRepo->findProductById($request->input('product'));
 
-        if ($product->attributes()->count() > 0) {
+        $options = [];
+        if ($request->has('productAttribute')) {
+            $pa = $request->input('productAttribute');
+            $productAttribute = $this->productAttributeRepo->findProductAttributeById($pa);
 
-            $productAttr = $product->attributes()->where('default', 1)->first();
+            $productRepo = new ProductRepository($product);
+            $combination = $productRepo->findProductCombination($productAttribute);
 
-            if (isset($productAttr->sale_price)) {
+            $options = $combination->all();
 
-                $product->price = $productAttr->price;
-
-                if (!is_null($productAttr->sale_price)) {
-                    $product->price = $productAttr->sale_price;
-                }
+            if (!is_null($productAttribute->price)) {
+                $product->price = $productAttribute->price;
             }
         }
 
-        if ($request->has('productAttribute')) {
-            $attr = $this->productAttributeRepo->findProductAttributeById($request->input('productAttribute'));
-            $product->price = $attr->price;
-        }
+        $this->cartRepo->addToCart($product, $request->input('quantity'), $options);
 
-        $this->cartRepo->addToCart($product, $request->input('quantity'));
-
-        return redirect()->route('cart.index')
-            ->with('message', 'Add to cart successful');
+        $request->session()->flash('message', 'Add to cart successful');
+        return redirect()->route('cart.index');
     }
 
     /**

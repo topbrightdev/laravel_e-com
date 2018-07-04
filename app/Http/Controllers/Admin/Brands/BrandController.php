@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin\Brands;
 
 use App\Http\Controllers\Controller;
-use App\Shop\Brands\Repositories\BrandRepository;
 use App\Shop\Brands\Repositories\BrandRepositoryInterface;
 use App\Shop\Brands\Requests\CreateBrandRequest;
 use App\Shop\Brands\Requests\UpdateBrandRequest;
@@ -30,7 +29,7 @@ class BrandController extends Controller
      */
     public function index()
     {
-        $data = $this->brandRepo->paginateArrayResults($this->brandRepo->listBrands(['*'], 'name', 'asc')->all());
+        $data = $this->brandRepo->paginateArrayResults($this->brandRepo->listBrands()->all());
 
         return view('admin.brands.list', ['brands' => $data]);
     }
@@ -85,9 +84,6 @@ class BrandController extends Controller
      */
     public function destroy($id)
     {
-        $brand = $this->brandRepo->findBrandById($id);
-        $brandRepo = new BrandRepository($brand);
-        $brandRepo->dissociateProducts();
         $this->brandRepo->deleteBrand($id);
 
         return redirect()->route('admin.brands.index')->with('message', 'Delete successful!');

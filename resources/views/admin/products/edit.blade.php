@@ -191,27 +191,24 @@
             $('#tabcontent > div:last-child').removeClass('active');
         }
         $(document).ready(function () {
-            const checkbox = $('input.attribute');
+            var checkbox = $('input.attribute');
             $(checkbox).on('change', function () {
-                const attributeId = $(this).val();
+                var attributeId = $(this).val();
                 if ($(this).is(':checked')) {
                     $('#attributeValue' + attributeId).attr('disabled', false);
                 } else {
                     $('#attributeValue' + attributeId).attr('disabled', true);
                 }
-                const count = checkbox.filter(':checked').length;
+                var count = checkbox.filter(':checked').length;
                 if (count > 0) {
                     $('#productAttributeQuantity').attr('disabled', false);
                     $('#productAttributePrice').attr('disabled', false);
-                    $('#salePrice').attr('disabled', false);
-                    $('#default').attr('disabled', false);
+                    $('#productAttributePrice').attr('disabled', false);
                     $('#createCombinationBtn').attr('disabled', false);
                     $('#combination').attr('disabled', false);
                 } else {
                     $('#productAttributeQuantity').attr('disabled', true);
                     $('#productAttributePrice').attr('disabled', true);
-                    $('#salePrice').attr('disabled', true);
-                    $('#default').attr('disabled', true);
                     $('#createCombinationBtn').attr('disabled', true);
                     $('#combination').attr('disabled', true);
                 }

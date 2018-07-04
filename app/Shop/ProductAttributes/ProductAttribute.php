@@ -10,9 +10,7 @@ class ProductAttribute extends Model
 {
     protected $fillable = [
         'quantity',
-        'price',
-        'sale_price',
-        'default'
+        'price'
     ];
 
     /**
