@@ -70,10 +70,14 @@ class BrandController extends Controller
      * @param $id
      *
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \App\Shop\Brands\Exceptions\UpdateBrandErrorException
      */
     public function update(UpdateBrandRequest $request, $id)
     {
-        $this->brandRepo->updateBrand($request->all(), $id);
+        $brand = $this->brandRepo->findBrandById($id);
+
+        $brandRepo = new BrandRepository($brand);
+        $brandRepo->updateBrand($request->all());
 
         return redirect()->route('admin.brands.edit', $id)->with('message', 'Update successful!');
     }
@@ -82,13 +86,15 @@ class BrandController extends Controller
      * @param $id
      *
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function destroy($id)
     {
         $brand = $this->brandRepo->findBrandById($id);
+
         $brandRepo = new BrandRepository($brand);
         $brandRepo->dissociateProducts();
-        $this->brandRepo->deleteBrand($id);
+        $brandRepo->deleteBrand();
 
         return redirect()->route('admin.brands.index')->with('message', 'Delete successful!');
     }
