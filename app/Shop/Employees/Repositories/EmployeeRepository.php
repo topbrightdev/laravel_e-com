@@ -75,11 +75,7 @@ class EmployeeRepository extends BaseRepository implements EmployeeRepositoryInt
      */
     public function updateEmployee(array $params): bool
     {
-        if (isset($params['password'])) {
-            $params['password'] = Hash::make($params['password']);
-        }
-
-        return $this->update($params);
+        return $this->model->update($params);
     }
 
     /**

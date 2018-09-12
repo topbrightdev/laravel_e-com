@@ -48,9 +48,7 @@ class PayPalExpressCheckoutRepository implements PayPalExpressCheckoutRepository
     /**
      * @param $shippingFee
      * @param Request $request
-     *
      * @return \Illuminate\Http\RedirectResponse
-     * @throws \App\Shop\Addresses\Exceptions\AddressNotFoundException
      */
     public function process($shippingFee, Request $request)
     {
@@ -78,7 +76,6 @@ class PayPalExpressCheckoutRepository implements PayPalExpressCheckoutRepository
         }
 
         try {
-
             $response = $this->payPal->createPayment(
                 route('checkout.execute', $request->except('_token', '_method')),
                 route('checkout.cancel')
