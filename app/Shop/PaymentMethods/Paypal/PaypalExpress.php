@@ -37,7 +37,7 @@ class PaypalExpress
     private $itemList;
     private $others;
 
-    public function __construct($clientId, $clientSecret, $mode)
+    public function __construct($clientId, $clientSecret, $mode, $url)
     {
         $apiContext = new ApiContext(
             new OAuthTokenCredential($clientId, $clientSecret)

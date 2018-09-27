@@ -54,6 +54,7 @@ class CityController extends Controller
      */
     public function update(UpdateCityRequest $request, $countryId, $provinceId, $city)
     {
+        dd('111');
         $city = $this->cityRepo->findCityByName($city);
 
         $update = new CityRepository($city);
