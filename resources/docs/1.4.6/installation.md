@@ -11,7 +11,7 @@ Laracom is based on Laravel application, so everything are the same with Laravel
 - [Build and compile](#build-compile)
 - [Configure Laracom](#configure-laracom)
 - [Other Settings](#other-setting)
-- [Admin Dashboard](#admin-dashboard)
+- [Admin Credentials](#admin-credentials)
 - [Production installation](#production-installation)
 
 <a name="requirements"></a>
@@ -75,46 +75,11 @@ and it will open a browser for you
 
 Install [NVM (Node Version Manager)](https://github.com/creationix/nvm#install-script)
 
-Install all dependencies and compile admin and frontend css / javascripts
+Install all dependencies for the admin section
 
 ```nodejs
 npm install && npm run dev
 ```
-
-> {primary} Protip: If you are adjusting your own theme for the frontend, you need to adjust the webpack.mix.js so it will compile your assets
-
-```js
-    ....
-    .styles(
-        [
-            'node_modules/bootstrap/dist/css/bootstrap.css',
-            'node_modules/font-awesome/css/font-awesome.css',
-            'node_modules/select2/dist/css/select2.css',
-            'resources/assets/css/drift-basic.min.css',
-            'resources/assets/css/front.css'
-        ],
-        'public/css/style.min.css'
-    )
-    .scripts(
-        [
-            'node_modules/bootstrap/dist/js/bootstrap.js',
-            'node_modules/select2/dist/js/select2.js',
-            'resources/assets/js/owl.carousel.min.js',
-            'resources/assets/js/Drift.min.js'
-        ],
-        'public/js/front.min.js'
-    )
-    .copyDirectory('node_modules/datatables/media/images', 'public/images')
-    .copyDirectory('node_modules/font-awesome/fonts', 'public/fonts')
-    .copyDirectory('resources/assets/admin-lte/img', 'public/img')
-    .copyDirectory('resources/assets/images', 'public/images')
-    .copy('resources/assets/js/scripts.js', 'public/js/scripts.js')
-    .copy('resources/assets/js/custom.js', 'public/js/custom.js');    
-```
-
-then run again: `npm run dev` to install your changes. 
-
-The public folder will have single `style.min.css` and `front.min.js` for all your assets. You can also copy files to the public folder.
 
 <a name="configure-laracom"></a>
 ### How to configure Laracom
@@ -242,13 +207,8 @@ MAIL_USERNAME=
 MAIL_PASSWORD=
 ```
 
-<a name="admin-dashboard"></a>
-### Admin dashboard
-In order to enter the administration dashboard, you have to hit the `/admin` route. 
-E.g enter http://localhost/admin or in general http://your-domain/admin in your browser.
-
-If you're not already logged in, you are redirected to the admin login screen.
-There you can use one of the following credentials to access the admin dashboard.
+<a name="admin-credentials"></a>
+### Admin dashboard login credentials:
 
 **Email and Passwords**
 

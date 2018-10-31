@@ -19,7 +19,7 @@ class CheckoutRepository
         $orderRepo = new OrderRepository(new Order);
         $cartRepo = new CartRepository(new ShoppingCart);
 
-        $order = $orderRepo->createOrder([
+        $order = $orderRepo->create([
             'reference' => $data['reference'],
             'courier_id' => $data['courier_id'],
             'customer_id' => $data['customer_id'],

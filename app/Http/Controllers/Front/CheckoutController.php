@@ -86,9 +86,7 @@ class CheckoutController extends Controller
         $this->customerRepo = $customerRepository;
         $this->productRepo = $productRepository;
         $this->orderRepo = $orderRepository;
-
-        $payPalRepo = new PayPalExpressCheckoutRepository;
-        $this->payPal = $payPalRepo;
+        $this->payPal = new PayPalExpressCheckoutRepository;
         $this->shippingRepo = $shipping;
     }
 
@@ -142,9 +140,8 @@ class CheckoutController extends Controller
      * @param CartCheckoutRequest $request
      *
      * @return \Illuminate\Http\RedirectResponse
-     * @throws \App\Shop\Addresses\Exceptions\AddressNotFoundException
-     * @throws \App\Shop\Customers\Exceptions\CustomerPaymentChargingErrorException
      * @codeCoverageIgnore
+     * @throws \App\Shop\Customers\Exceptions\CustomerPaymentChargingErrorException
      */
     public function store(CartCheckoutRequest $request)
     {

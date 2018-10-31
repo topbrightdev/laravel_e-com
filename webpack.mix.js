@@ -25,16 +25,6 @@ mix
         ],
         'public/css/admin.min.css'
     )
-    .scripts(
-        [
-            'resources/assets/js/jquery-2.2.3.min.js',
-            'node_modules/bootstrap/dist/js/bootstrap.js',
-            'node_modules/select2/dist/js/select2.js',
-            'node_modules/datatables/media/js/jquery.dataTables.js',
-            'resources/assets/admin-lte/js/app.js'
-        ],
-        'public/js/admin.min.js'
-    )
     .styles(
         [
             'node_modules/bootstrap/dist/css/bootstrap.css',
@@ -44,6 +34,16 @@ mix
             'resources/assets/css/front.css'
         ],
         'public/css/style.min.css'
+    )
+    .scripts(
+        [
+            'resources/assets/js/jquery-2.2.3.min.js',
+            'node_modules/bootstrap/dist/js/bootstrap.js',
+            'node_modules/select2/dist/js/select2.js',
+            'node_modules/datatables/media/js/jquery.dataTables.js',
+            'resources/assets/admin-lte/js/app.js'
+        ],
+        'public/js/admin.min.js'
     )
     .scripts(
         [
