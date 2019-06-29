@@ -32,9 +32,6 @@
         "filp/whoops": "~2.0"
     },
     "autoload": {
-        "files": [
-            "app/Helpers/helper.php"
-        ],
         "classmap": [
             "database"
         ],
@@ -70,5 +67,11 @@
         "optimize-autoloader": true
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/Laracommerce/LaravelShoppingcart"
+        }
+    ]
 }

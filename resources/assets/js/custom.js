@@ -15,10 +15,4 @@ $(document).ready(function () {
                 .attr('data-zoom', $(this).attr('src') +'?w=1200');
         });
     }
-
-    $(".img-orderDetail").mouseover(function() {
-      $(this).css({ width: '150px', height: '150px' });
-    }).mouseout(function() {
-      $(".img-orderDetail").css({ width: '50px', height: '50px'});
-    });
 });

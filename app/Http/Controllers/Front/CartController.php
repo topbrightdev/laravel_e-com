@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Front;
 
 use App\Shop\Carts\Requests\AddToCartRequest;
-use App\Shop\Carts\Requests\UpdateCartRequest;
 use App\Shop\Carts\Repositories\Interfaces\CartRepositoryInterface;
 use App\Shop\Couriers\Repositories\Interfaces\CourierRepositoryInterface;
 use App\Shop\ProductAttributes\Repositories\ProductAttributeRepositoryInterface;
@@ -122,7 +121,7 @@ class CartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCartRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $this->cartRepo->updateQuantityInCart($id, $request->input('quantity'));
 
