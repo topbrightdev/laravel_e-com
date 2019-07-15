@@ -117,7 +117,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories = $this->categoryRepo->listCategories('name', 'asc')->where('parent_id', 1);
+        $categories = $this->categoryRepo->listCategories('name', 'asc');
 
         return view('admin.products.create', [
             'categories' => $categories,
@@ -148,11 +148,6 @@ class ProductController extends Controller
 
         $productRepo = new ProductRepository($product);
 
-        if ($request->hasFile('image')) {
-            $productRepo->saveProductImages(collect($request->file('image')));
-        }
-
-        $productRepo = new ProductRepository($product);
         if ($request->hasFile('image')) {
             $productRepo->saveProductImages(collect($request->file('image')));
         }

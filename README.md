@@ -5,11 +5,23 @@
 [![Fork Status](https://img.shields.io/github/forks/Laracommerce/laracom.svg)](https://github.com/Laracommerce/laracom)
 [![Star Status](https://img.shields.io/github/stars/Laracommerce/laracom.svg)](https://github.com/Laracommerce/laracom)
 [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/larac0m/Lobby)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FLaracommerce%2Flaracom.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FLaracommerce%2Flaracom?ref=badge_shield)
 
 # Laravel FREE E-Commerce Software
 
 - See full [documentation](https://shop.laracom.net/docs)
 
+# Setup
+* `php artisan migrate --seed`
+* `npm run dev`
+* `php artisan storage:link`
+
 # Author
 
 [Jeff Simons Decena](https://jsdecena.me)
+
+Sign-up with [Digital Ocean and get $10 discount](https://m.do.co/c/bce94237de96)!
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FLaracommerce%2Flaracom.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FLaracommerce%2Flaracom?ref=badge_large)

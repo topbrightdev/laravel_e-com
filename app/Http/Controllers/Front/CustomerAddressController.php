@@ -35,9 +35,9 @@ class CustomerAddressController extends Controller
 
 
     /**
-     * @param AddressRepositoryInterface  $addressRepository 
-     * @param CountryRepositoryInterface  $countryRepository 
-     * @param CityRepositoryInterface     $cityRepository    
+     * @param AddressRepositoryInterface  $addressRepository
+     * @param CountryRepositoryInterface  $countryRepository
+     * @param CityRepositoryInterface     $cityRepository
      * @param ProvinceRepositoryInterface $provinceRepository
      */
     public function __construct(
@@ -53,16 +53,12 @@ class CustomerAddressController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function index()
     {
-        $customer = auth()->user();
 
-        return view('front.customers.addresses.list', [
-            'customer' => $customer,
-            'addresses' => $customer->addresses
-        ]);
+        return redirect()->route('accounts', ['tab' => 'address']);
     }
 
     /**
@@ -121,7 +117,7 @@ class CustomerAddressController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UpdateAddressRequest $request, $addressId)
+    public function update(UpdateAddressRequest $request, $customerId, $addressId)
     {
         $address = $this->addressRepo->findCustomerAddressById($addressId, auth()->user());
 
@@ -145,9 +141,14 @@ class CustomerAddressController extends Controller
     {
         $address = $this->addressRepo->findCustomerAddressById($addressId, auth()->user());
 
-        $address->delete();
-
-        return redirect()->route('customer.address.index', $customerId)
+       if ($address->orders()->exists()) {
+             $address->status=0;
+             $address->save();
+       }
+       else {
+             $address->delete();
+       }
+        return redirect()->route('accounts', ['tab' => 'address'])
             ->with('message', 'Address delete successful');
     }
 }
