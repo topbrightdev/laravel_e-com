@@ -15,7 +15,7 @@ class AddToCartRequest extends BaseFormRequest
     {
         return [
             'product' => ['required', 'integer'],
-            'quantity' => ['required', 'integer', 'min:1']
+            'quantity' => ['required', 'integer']
         ];
     }
 }

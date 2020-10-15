@@ -13,7 +13,6 @@ use App\Shop\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
 use App\Shop\Orders\Order;
 use App\Shop\Orders\Repositories\Interfaces\OrderRepositoryInterface;
 use App\Shop\Orders\Repositories\OrderRepository;
-use App\Shop\Orders\Requests\UpdateOrderRequest;
 use App\Shop\OrderStatuses\OrderStatus;
 use App\Shop\OrderStatuses\Repositories\Interfaces\OrderStatusRepositoryInterface;
 use App\Shop\OrderStatuses\Repositories\OrderStatusRepository;
@@ -133,8 +132,7 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    // public function update(Request $request, $orderId)
-    public function update(UpdateOrderRequest $request, $orderId)
+    public function update(Request $request, $orderId)
     {
         $order = $this->orderRepo->findOrderById($orderId);
         $orderRepo = new OrderRepository($order);
@@ -147,8 +145,7 @@ class OrderController extends Controller
 
         $orderRepo->updateOrder($orderData);
 
-        return redirect()->route('admin.orders.edit', $orderId)
-            ->with('message', 'Update successful');
+        return redirect()->route('admin.orders.edit', $orderId);
     }
 
     /**

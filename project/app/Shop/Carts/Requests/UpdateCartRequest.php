@@ -14,7 +14,7 @@ class UpdateCartRequest extends BaseFormRequest
     public function rules()
     {
         return [
-            'quantity' => ['required', 'integer', 'min:1']
+            'quantity' => ['required', 'integer']
         ];
     }
 }
