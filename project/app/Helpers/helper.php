@@ -16,7 +16,7 @@ if (!function_exists("helper_test")) {
     }
 }
 
-if (!function_exists("populate_breadcrumb")) {
+if (!function_exists("populate_breadcumb")) {
     /**
      * popular data to layouts.admin.app when send from controller
      *
@@ -27,22 +27,22 @@ if (!function_exists("populate_breadcrumb")) {
      * ["name" => "Products1", "url" => request()->fullUrl()]
      * ];
      *
-     * populate_breadcrumb($data)
+     * populate_breadcumb($data)
      * </pre>
      *
      * @param $data
      * @return void
      */
-    function populate_breadcrumb($data)
+    function populate_breadcumb($data)
     {
-        $validated = validate_breadcrumb($data);
+        $validated = validate_breadcumb($data);
         if ($validated["valid"] === true) {
             view()->composer([
                 "layouts.admin.app"
             ], function ($view) use ($data) {
                 $view->with(
                     [
-                        "breadcrumbs" => $data
+                        "breadcumbs" => $data
                     ]
                 );
             });
@@ -52,14 +52,14 @@ if (!function_exists("populate_breadcrumb")) {
 
 }
 
-if (!function_exists('validate_breadcrumb')) {
+if (!function_exists('validate_breadcumb')) {
 
     /**
-     * validate breadcrumb data
+     * validate breadcumb data
      * @param $data
      * @return array
      */
-    function validate_breadcrumb($data)
+    function validate_breadcumb($data)
     {
         $validated = false;
         $errors = [];

@@ -42,7 +42,7 @@
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        @include("layouts.admin.breadcrumb")
+        @include("layouts.admin.breadcumb")
         @yield('content')
     </div>
     <!-- /.content-wrapper -->

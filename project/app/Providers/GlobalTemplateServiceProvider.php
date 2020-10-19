@@ -39,26 +39,26 @@ class GlobalTemplateServiceProvider extends ServiceProvider
         });
 
         /**
-         * breadcrumb
+         * breadcumb
          */
         view()->composer([
             "layouts.admin.app"
         ], function ($view) {
-            $breadcrumb = [
+            $breadcumb = [
                 ["name" => "Dashboard", "url" => route("admin.dashboard"), "icon" => "fa fa-dashboard"],
             ];
             $paths = request()->segments();
             if (count($paths) > 1) {
                 foreach ($paths as $key => $pah) {
                     if ($key == 1)
-                        $breadcrumb[] = ["name" => ucfirst($pah), "url" => request()->getBaseUrl() . "/" . $paths[0] . "/" . $paths[$key], 'icon' => config("module.admin." . $pah . ".icon")];
+                        $breadcumb[] = ["name" => ucfirst($pah), "url" => request()->getBaseUrl() . "/" . $paths[0] . "/" . $paths[$key], 'icon' => config("module.admin." . $pah . ".icon")];
                     elseif ($key == 2)
-                        $breadcrumb[] = ["name" => ucfirst($pah), "url" => request()->getBaseUrl() . "/" . $paths[0] . "/" . $paths[1] . "/" . $paths[$key], 'icon' => config("module.admin." . $pah . ".icon")];
+                        $breadcumb[] = ["name" => ucfirst($pah), "url" => request()->getBaseUrl() . "/" . $paths[0] . "/" . $paths[1] . "/" . $paths[$key], 'icon' => config("module.admin." . $pah . ".icon")];
                 }
             }
             $view->with(
                 [
-                    "breadcrumbs" => $breadcrumb
+                    "breadcumbs" => $breadcumb
                 ]
             );
         });
