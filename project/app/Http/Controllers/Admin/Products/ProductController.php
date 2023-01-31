@@ -117,7 +117,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories = $this->categoryRepo->listCategories('name', 'asc')->toTree();
+        $categories = $this->categoryRepo->listCategories('name', 'asc');
 
         return view('admin.products.create', [
             'categories' => $categories,
